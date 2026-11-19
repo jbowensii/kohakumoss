@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>KohakuMossTrainer</Name>
+  <Repository>ghcr.io/jbowensii/kohakumoss:latest</Repository>
+  <Registry>https://github.com/jbowensii/kohakumoss/pkgs/container/kohakumoss</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/KohakuBlueleaf/KohakuMossTrainer</Support>
+  <Project>https://github.com/KohakuBlueleaf/KohakuMossTrainer</Project>
+  <Overview>LoRA / LyCORIS finetuning for OpenMOSS MOSS-Image (KohakuMoss). CLI only, no web UI: the container idles, and you run `docker exec -it KohakuMossTrainer bash` to train. Built for Tesla V100 (sm_70, fp16, use the vram_16g layer). Base model dir is mounted at /models (ComfyUI layout).</Overview>
+  <Category>Tools: Other:</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/jbowensii/kohakumoss/main/kohakumoss.xml</TemplateURL>
+  <Icon/>
+  <ExtraParams>--runtime=nvidia --shm-size=8g</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>Nvidia-Driver plugin. R580 driver; Tesla V100 (sm_70). Enough host RAM (20+ GiB, more for vram_16g).</Requires>
+  <Config Name="NVIDIA_VISIBLE_DEVICES" Target="NVIDIA_VISIBLE_DEVICES" Default="" Mode="" Description="V100 GPU UUID (GPU-xxxx...), or 'all'." Type="Variable" Display="always" Required="true" Mask="false">GPU-843f741b-9b99-5d5e-d424-68783dd52d15</Config>
+  <Config Name="NVIDIA_DRIVER_CAPABILITIES" Target="NVIDIA_DRIVER_CAPABILITIES" Default="all" Mode="" Description="" Type="Variable" Display="advanced" Required="true" Mask="false">all</Config>
+  <Config Name="Datasets" Target="/workspace/datasets" Default="/mnt/user/ai-lab/training/datasets" Mode="rw" Description="Training datasets." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/ai-lab/training/datasets</Config>
+  <Config Name="Output (runs)" Target="/workspace/runs" Default="/mnt/user/ai-lab/training/output" Mode="rw" Description="Run output, checkpoints, exports, kernel caches." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/ai-lab/training/output</Config>
+  <Config Name="Configs" Target="/workspace/configs/user" Default="/mnt/user/ai-lab/training/configs" Mode="rw" Description="Training/data configs." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/ai-lab/training/configs</Config>
+  <Config Name="MOSS models" Target="/models" Default="/mnt/cache_ssd/ai-models/comfyui/basedir/models" Mode="ro" Description="MOSS-Image base weights (ComfyUI layout)." Type="Path" Display="always" Required="true" Mask="false">/mnt/cache_ssd/ai-models/comfyui/basedir/models</Config>
+</Container>
