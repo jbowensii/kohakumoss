@@ -14,7 +14,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
     TORCHINDUCTOR_CACHE_DIR=/workspace/runs/.cache/inductor \
     HF_HOME=/workspace/runs/.cache/huggingface
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Drop the CUDA apt repo first — it breaks `apt-get update` on the ubuntu24.04 CUDA
+# images (expired/rotated key), leaving ubuntu packages with "no installation candidate".
+RUN rm -f /etc/apt/sources.list.d/cuda*.list /etc/apt/sources.list.d/*cuda*.sources /etc/apt/sources.list.d/nvidia*.list 2>/dev/null; \
+    apt-get update && apt-get install -y --no-install-recommends \
       python3 python3-venv python3-dev build-essential git ca-certificates curl \
     && rm -rf /var/lib/apt/lists/*
 
